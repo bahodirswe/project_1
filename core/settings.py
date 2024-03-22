@@ -30,7 +30,8 @@ EXTERNAL_APPS = [
 ]
 
 LOCAL_APPS = [
-    "blog.apps.BlogConfig" ,
+    "blog.apps.BlogConfig",
+    "user.apps.UserConfig",
 ]
 
 
@@ -116,3 +117,9 @@ MEDIA_URL = '/media/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "user.User"
+
+LOGIN_REDIRECT_URL = "blog:home"
+# LOGIN_URL = "blog:user_logout"
+LOGOUT_REDIRECT_URL = "blog:home"
