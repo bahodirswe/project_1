@@ -32,3 +32,40 @@ class Post(models.Model):
 
     class Meta:
         ordering =('-created_at',)
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    body = models.TextField()
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="replies")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at', '-updated_at',]
+
+
+    @property
+    def getReplies(self):
+        return Comment.objects.filter(parent=self).reverse()
+
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        else:
+            return self.body
+        
+  
+    def __str__(self) -> str:
+        return f"{self.body} - {self.parent}"
+
+class Trend(models.Model):
+    hashtag = models.CharField(max_length=255)
+    occurences = models.IntegerField()
+    def __str__(self) -> str:
+        return f"{self.hashtag} - {self.occurences}"
+
+    class Meta:
+        ordering = ['-occurences',]

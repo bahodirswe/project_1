@@ -1,0 +1,282 @@
+{% extends 'base.html' %} {% block content %}
+
+<main>
+  <div class="border-bottom border-primary border-1 opacity-1"></div>
+
+  <section class="pt-0">
+    <div class="container position-relative" data-sticky-container>
+      <div class="row">
+        <div class="col-lg-8 mb-5">
+          <figure class="my-5">
+            <blockquote class="blockquote">
+              <h2>{{post.name}}</h2>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+              <a href="#" class="badge text-bg-danger mb-2">
+                {{ post.category }}
+              </a>
+            </figcaption>
+          </figure>
+
+          <h5>{{ post.summary }}</h5>
+
+          {% if post.img %}
+          <figure class="figure mt-4 mb-5">
+            <img class="rounded" src="{{ post.img.url }}" alt="Image" />
+          </figure>
+          {% endif %} {% if post.audio %}
+          <h6 class="mt-2">Post Podcast</h6>
+          <div class="d-flex align-items-center border rounded mb-4">
+            <div class="w-100">
+              <div class="player-wrapper bg-light rounded">
+                <div tabindex="0"
+                  class="plyr plyr--full-ui plyr--audio plyr--html5 plyr--paused plyr--stopped">
+                  <audio class="player-audio" crossorigin>
+                    <source src="{{ post.audio.url }}" type="audio/mp3" />
+                  </audio>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <p class="mb-5">{{ post.text }}</p>
+
+          <div class="row g-0 mt-2">
+            {% if oldingi_post %}
+            <div
+              class="col-sm-6 bg-primary bg-opacity-10 p-4 position-relative border-end border-1 rounded-start">
+              <span><i class="bi bi-arrow-left me-3 rtl-flip"></i> Oldingi
+                post</span>
+              <h5 class="m-0">
+                <a href="{% url 'blog:post_detail' oldingi_post.id %}"
+                  class="stretched-link btn-link text-reset">
+                  {{ oldingi_post.name }}
+                </a>
+              </h5>
+            </div>
+            {% endif %} 
+            {% if keyingi_post %}
+            <div
+              class="col-sm-6 bg-primary bg-opacity-10 p-4 position-relative text-sm-end rounded-end">
+              <span>Keyingi post<i
+                  class="bi bi-arrow-right ms-3 rtl-flip"></i></span>
+              <h5 class="m-0">
+                <a href="{% url 'blog:post_detail' keyingi_post.id %}"
+                  class="stretched-link btn-link text-reset">
+                  {{ keyingi_post.name }}
+                </a>
+              </h5>
+            </div>
+            {% endif %}
+          </div>
+
+          <hr />
+
+          <div class="d-flex py-4">
+            {% if post.author.avatar %}
+            <a href="#">
+              <div class="avatar avatar-xxl me-4 mb-5">
+                <img class="avatar-img rounded-circle"
+                  src="{{ post.author.avatar.url }}" alt="avatar" />
+              </div>
+            </a>
+            {% endif %}
+
+            <div>
+              <div class="d-sm-flex align-items-center justify-content-between">
+                <div>
+                  <h4 class="m-0">
+                    <a href="#" class="text-reset">
+                      {{post.author.full_name}}
+                    </a>
+                  </h4>
+                  <small>{{ post.author.job }}</small>
+                </div>
+                <a href="#" class="btn btn-xs btn-primary-soft mb-5">Maqolalarni
+                  ko'rish</a>
+              </div>
+              <p class="my-2">{{ post.author.bio }}</p>
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link ps-0 pe-2 fs-5" href="#"><i
+                      class="fab fa-facebook-square"></i></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link px-2 fs-5" href="#"><i
+                      class="fab fa-twitter-square"></i></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link px-2 fs-5" href="#"><i
+                      class="fab fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <hr />
+
+          <div>
+            <h3>{{ comments_count }} comments</h3>
+            
+            {% for comment in comments %}
+            {% if comment.user.url %}
+            <div class="my-4 d-flex ps-2 ps-md-3">
+              <img class="avatar avatar-md rounded-circle float-start me-3"
+                src="{{ comment.user.avatar.url}}"
+                alt="avatar" />
+              <div>
+                <div class="mb-2">
+                  <h5 class="m-0">{{ comment.user.full_name}}</h5>
+                  <span class="me-3 small">{{ comment.created_at }}</span>
+                  <a href="#form-reply" style="cursor: pointer"
+                    data-comment-id="{{ comment.id }}"
+                    onclick="showReplyForm(this)"
+                    class="text-body fw-normal">Reply</a>
+                </div>
+                <p>{{ comment.body}}</p>
+              </div>
+            </div>
+            {% else %}
+            <div class="my-4 d-flex ps-2 ps-md-3">
+              <img class="avatar avatar-md rounded-circle float-start me-3"
+                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAnQMBIgACEQEDEQH/xAAcAAEAAgIDAQAAAAAAAAAAAAAABgcFCAEDBAL/xABFEAABAwMBAwkDCQUGBwAAAAABAAIDBAURBgchMRIiQVFhcYGRoRMUYiMyQlJygrGywRVTotHSJDNVY5KUF0NERXN0wv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC8UREBERARcZWI1Hqa06dphNdatsRd8yNoLnv7mjf48EGYXzI9sbS57mtaOJJwFSeotsFwqHOisdPHRw5w2abnyO8ODfVYSLTuuNVuEtRDXzxvP97Wz8hjfuuP5Qguqr1rpiikdHU363NkbuMbahrnDwBJWPk2l6SjOP2oHfZhef0UFodjFxe1vvt2pYetsUTn48SQskzYrS4+UvtRn4Kdo/ElBK4to+kpf+8RR/8AkY5o9QstbtS2K6HFuvNBUu+rFUscR4Zyq8m2Kxcn5C+y56PaUwP4OCwly2PXyAF1FVUdZjg0kxu9cj1QXoi109/1vopzXVLq+jhHFlQfaw92clo8CpppzbBTycmHUdH7twHvNMC9neW8R4ZQWui89FXUtfTR1NFURzwSDLZI3coFehAREQEREBERAXBOEPBVHtU1++N81gskxa4cysqmHBHwMP4kcOHHOA9+vtp8VufJbdOmOesGWyVRw6KE9IH1nDyHooTprRN91nVm5V0skVNKcvranJfKPgHT37h+CkWzjZsJ2RXfUcB9kRyqehf0joc/9G+fUrgY0MaGtADQMADgEEd0zoixadY19HSCSpxvqZ+fIT2Ho7hhSPC5RAReO5XSgtVOai5VcNNF9aV4bnu61Ep9q+konFsdZUTb+MdK/HqAgnK4wohbtpek66QRtufsHngKmJ8Y/wBRHJ9VLYpY5Y2yRPa9jhlrmnIPig5exr2lj2hzXbiCMghQLVOy2zXYPmtjRbaw5OYh8k8/E3o7xjxU/RBri12qNm93xyXQcs5I3vp6od+7J3djgrl0Vra36qpyIv7PXMGZaV7hyvtN+s3t88LOXa10V4oZaK5U7J6eQYcxw9R1HtVD6w0pc9C3WG426omNJ7TNNVj50bvqv7fQ+iDYVFENnusodVW8tmDYrlTge8RDg4fXb2H0KlwOUHKIiAiLqqJmU8Ek0rgyONpc9x6AN5KCF7U9WnTtpbS0TwLjWZbGRxhZ0v8A0Hb3KFbJNFC5zi+3SLlUcLs0zHnPtng73HrAPme7fgCaraJr3mktbUybs7zDTMP8v4nLYWhpIKGkhpKWMRwQsDI2DoAQd4GAuU4IgKE7Rddx6XpxSUQZNdpm5Yx29sLfrvGfIdKll0rYrbb6muqDiKnjdI/uAytXLrcam73KouFc7lVFQ/lu6h1AdgG5Bxc7jW3asfWXKpkqZ38XyHOOwdAHYF5clEQFntK6tu2l6hrqCbl0xdmSkkJMb+vH1T2j1WBRBtHpm/0WpLVHcLe8ljua9jvnRuHFpWVWvuyXUD7PqiKkkkIpLiRA5pO4SfQd57vvdi2BHBByvLcqCmudFNRVsTZaeZhY9jhxC9SINc73b7ns61eyWke5wYTJSSu4SxE4LXdZxuPgepX1p68Ut/tFPcqJ2Ypm55J4scNxae0HIWJ2haZbqbT8tPG0e+Q/K0zvjH0e4jcq22L6ifQXmSy1Ty2nrcuia4Y5EzRw7yB5tQXiiDgiAoFtmuxt+kjSRSFktfIIct48gc53mBj7ynhVGbdrkJNRUtJyjyaKkLyO15yfRgQSHYZZWxW6rvcrPlah5giceiNvzsd7vyhWmsRpO3C0abttBjDoadgf9ojJ9SVl0BERBC9sNQ+n0DcDGcGV8MRPY6VoPpla9rZHaVbn3TRF1po2l0jY2zMA6TG4Px/CtbkBERAREQdtJIYaynmacOimZI0joIcCFtjGeUxrscRlasafoZLnfbdRQjLp6mNh7G8oco+DclbUDcMAYQcoiIODwWv2022yac1ya2h+TbO5tbBjcGvBy7+IZ+8tglWW3W3Caw0NwA51NUezcfheMfmDUFgWa4R3W00dwg/u6mFkrezlDOF7VAti9w990a2Bzsuo6h8J7AcPHo5T1AK1512f2ltSqKd+9nvkEGCOLcMyPUrYZa83vmbXJ+V0XaI+ZZ/NBsMNwwiIgIiIPlzQ7cQCCMEHpWuO0LSkmlb05kUbv2bUuLqR/QOthPWPUeK2QXgvVoob1b5aG5QCank4tJwQesHiCOsINVkVial2T3ahkfNY3C4U2ctiJDJmjq34Du/d3KFVFjvFM8sqLTXxuHEOpnj9EHgTisxb9K6guUgZR2atdn6T4ixo+87AVkaQ2TMglZV6mkZOW4LaOIksz8bunuG7vQfGxnSksbnajr4y0PYWUbHDiD85/jwHZk9IVtBcMY1gAaAABgAcAvpAREQFFNqcDZ9CXXlf8tjZB3tcCpWo1tJONB3z/wBR4QQnYHMfZXum6BJFIO8hwP5QrbVO7BATW3o9Hsoc+b1cSAtedpuLVtHq6sghofBVHuAbn8q2GVL7eLaWXK2XEN+TmhfBI74mnLfMF3kguZjg9jXNOQRkEL6Uc2e3QXfR9sqS7MjYhDJ2PZzT+CkaAiLE6j1Db9O251bc5eQzgyMb3yu6mjpKDK5WKumpbJaSW3G6UsDxxY6QcryG9UfqvaNe79I+Kmlfb6E5Ahhdh7h8T+PgMDvUMAAJON5OcoNhpNqOkGOx+05HdraSUj8q+f8AippD/EJv9nL/AErXxEGwf/FTSH+ITf7OX+ld9NtL0jUODW3YMJ/ewSMHmW4WuqINrbfc6G5R+0oKyCpYOJhkDsd+OC9WQtTKaeajqGVFJLJBOw82SJxa4eIVm6N2sVEEkdHqf5eE7hWsYA6P7YHEdo39hQXOi6qeoiqYmTU8jJYZG8pkjHZDh1grtQFDtrVUKbQteCQPbFkQ7cuCmKqfbvcwKW12tjhl8jqiQdjRyW+rj5IPrYJT4oLxVYPPqGRA/Zbyv/tWsoZskt/7P0RROLcPqi6od3OPN/hAUzQFEtqFlfe9IVccDQamnxURbuJackeLeUPFS1cEZQU3sMvzIquqsUrsNnHvNPk7sjAcPEYPgVcq161taavROs21duzHC6T3qjfjmjfzo/Dh3OCvDTN7ptQ2anuVIRyJW85md8bxxae4oPRd7jTWm3VFfWv5FPAwvef0HaeC1r1TqGt1NdpK+tcWt4QQZy2FnUO3rPSVYW3S+O9rRWGI4byRVT9u8hg9HHyVTICIiAiIgIiICIiCwdlOs32avjs9xlzbal/Jic539xISAMfCent39avYFaju4FbIbNb2++6SpaiodyqmHMEzvrObuz4jBQSgkAHJxha66gqpNdbQPZUZLoqidtNA7O5sTeLu75zvFWVtd1ULNZza6OTFfXNI3cY4uDndmeA8epYbYlpkxsm1DUswHtMNIC3GG55zvEjA7igtWlgjpqaGnhaGxRMDGNA4ADAC7URAREQR7W2mYNU2SSilIZOw+0ppT9CQDA8DwKprRWpazQuoJ6K5RSNpnSCOtp+JjcOD2jr39HEEdQWwyg+0bQkWpqb3yi5MV2hbiNxOGzD6rv0PRlB6dYaXt+uLNFNTzRtqAwPpK2PnAg78HraVQV3tdbZbhLQXOB0NRGd7TvDh1g9I7VKdG6xuWiLhJbrjTyuohIRNSvGHwuzvczO7f1cDxB67brKHTuvrIx3KZUwHPs5ojyZIXfiD1g+IQa3optqrZperI6SeijdcaIbw6BpMrR8TBvPeM+ChLstcWuBDgcEEbwgIiICIiAi7qKkqq+obT0NNNUzOOBHDGXE+XR2qztJbJJpnMqtTyeziG8UcLucftuHDuHmgiGitG12qqzEfKgoI3fL1WM4+FvW70HE9Suq63Gz7P9MsbHE2OKIFlNTN+dM/+fSSV1al1VZdEW1lNGyMztZinoKfAOOgkfRb2n1VQwwag2kajdI45IxypCD7Klj6seHDi7zwHNhtVy2iasmmrZHmNzvaVc44RMzuY3w3Ad5PbsLSU8NJTx09NG2KGJoYxjeDQN2AsfpnT9Fpu1x2+3tIY3nPe750jsb3O7fwWWQEREBERAXBGVyiCMay0VbNU0+Z2+wrWDEdVG3nAdRH0h2eSpqutuqdndyNVHJJDHygBVRc6CYdAcP0O/qWxi+JomTROjlY2SNww5jhkOHUQgrHTe1+hna2HUVOaOXgaiAF8bj2gc4eqldTadJ6wj94dBQV5xgVEJHLH3m7wsHqDZNZLi4zW10ltnJziLnRH7p4eBCgVdsx1XapjNQtiqSw5bNRzlknkcEeBKCaV+xuyzO5VDX11J8JLZG+oz6rEybFZs/Jagjx8VGf61GW6j1/ZHezmkvDAzoqaVz2/wCpzSD5ruG1TV0e509IT/mUv8iEEkg2K4d/ab+S3/LpcH1cVnrZsl05R4dVe9Vzx++l5LT4Nwq7O03WVRzI6hmT+4pAT4cV1F+0HUmWFt7ljduIcx0EfnhoPqguCpu2ktFUvsBJQ0DRwp6dg5bj9loye8qu9VbXaupbJT2CD3OI7vepiDIfsjg3vOSumy7H71Uycq61NNQwnGWxn2sh/QeZVj6a2f2DTxZLT0pqKtv/AFNUeW4HrA4N8Agq/Suzq9akqRX3t89HSvdynyz86afuB3jvd4BXXZLNb7Jb2UNspmQQM34bxcekk8ST1lZBEBERAREQEREBERAREQFxhEQF8Ohif8+Jju9oK4RB9NjYz5jGt7hhfSIgBcoiAiIgIiICIiD/2Q=="
+                alt="avatar" />
+              <div>
+                <div class="mb-2">
+                  <h5 class="m-0">{{ comment.user.full_name}}</h5>
+                  <span class="me-3 small">{{ comment.created_at }}</span>
+                  <a href="#form-reply" style="cursor: pointer"
+                    data-comment-id="{{ comment.id }}"
+                    onclick="showReplyForm(this)"
+                    class="text-body fw-normal">Reply</a>
+                </div>
+                <p>{{ comment.body}}</p>
+              </div>
+            </div>
+            {% endif %}
+            {% for reply in comment.getReplies.all %}
+            <div class="my-4 d-flex ps-3 ps-md-5">
+              <img class="avatar avatar-md rounded-circle float-start me-3"
+                src="{{ post.author.avatar.url }}"
+                alt="avatar" />
+              <div>
+                <div class="mb-2">
+                  <h5 class="m-0">
+                    {{ reply.author.full_name }}
+                  </h5>
+                  <span class="me-3 small">{{ reply.created_at }}</span>
+                </div>
+                <p>{{ reply.body }}</p>
+              </div>
+            </div>
+            {% endfor %} {% endfor %}
+          </div>
+
+          {% if request.user.is_authenticated %}
+          <div id="form-reply">
+            <h3>Comment qoldiring</h3>
+            <form class="row g-3 mt-2" method="post">
+              {% csrf_token %}
+              <div class="col-12">
+                <input type="hidden" name="parent" id="parent-comment-id" />
+                {{ comment_form.body }}
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                  Post comment
+                </button>
+              </div>
+            </form>
+          </div>
+          {% else %} 
+          <h5>Iltimos, fikr qoldirish uchun tizimga kiring!</h5>
+          {% endif %} 
+        </div>
+        <div class="col-lg-3">
+          <div data-sticky data-margin-top="80" data-sticky-for="991">
+            <h4>Share this article</h4>
+            <ul class="nav text-white-force">
+              <li class="nav-item">
+                <a
+                  class="nav-link icon-md rounded-circle me-2 mb-2 p-0 fs-5 bg-facebook"
+                  href="#">
+                  <i class="fab fa-facebook-square align-middle"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link icon-md rounded-circle me-2 mb-2 p-0 fs-5 bg-twitter"
+                  href="#">
+                  <i class="fab fa-twitter-square align-middle"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link icon-md rounded-circle me-2 mb-2 p-0 fs-5 bg-linkedin"
+                  href="#">
+                  <i class="fab fa-linkedin align-middle"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link icon-md rounded-circle me-2 mb-2 p-0 fs-5 bg-pinterest"
+                  href="#">
+                  <i class="fab fa-pinterest align-middle"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link icon-md rounded-circle me-2 mb-2 p-0 fs-5 bg-primary"
+                  href="#">
+                  <i class="far fa-envelope align-middle"></i>
+                </a>
+              </li>
+            </ul>
+            <ul class="list-inline text-primary-hover mt-0 mt-lg-3">
+              {% for i in trends %}
+              <li class="list-inline-item">
+                <a class="text-body" href="#">#{{ i.hashtag }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+            <div class="mt-4">
+              <a href="#" class="d-block card-img-flash">
+                <img src="assets/images/adv.png" alt />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div
+    class="sticky-post bg-light border p-4 mb-5 text-sm-end rounded d-none d-xxl-block sticky-post-sticked">
+    <div class="d-flex align-items-center">
+      <div class="me-3">
+        <span>Next post
+          <i class="bi bi-arrow-right ms-3 rtl-flip"></i>
+        </span>
+        <h6 class="m-0">
+          <a href="javascript:void(0)"
+            class="stretched-link btn-link text-reset">
+            Bad habits that people in the industry need to quit
+          </a>
+        </h6>
+      </div>
+      <div class="col-4 d-none d-md-block">
+        <img src="assets/images/blog/4by3/05.jpg" alt="Image" />
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  function showReplyForm(element) {
+    var commentId = element.getAttribute("data-comment-id");
+    document.getElementById("parent-comment-id").value = commentId;
+  }
+</script>
+
+{% endblock %}

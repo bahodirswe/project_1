@@ -1,0 +1,9 @@
+Django
+django-cors-headers==4.1.0
+gunicorn
+Pillow==10.2.0
+sqlparse==0.4.4
+psycopg2-binary==2.9.9
+python-dotenv
+whitenoise==6.6.0
+dj-database-url

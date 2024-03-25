@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="py-4">
+  <div class="container">
+    <div class="row pb-4">
+      <div class="col-12">
+        <!-- Title -->
+        <h1 class="mb-0 h2">Post yarating</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <!-- Chart START -->
+        <div class="card border">
+          <!-- Card body -->
+          <div class="card-body">
+            <!-- Form START -->
+            <form method="post" enctype="multipart/form-data">
+              <!-- Main form -->
+              <div class="row">
+                {% csrf_token %}
+                {{ form.as_p }} 
+                <!-- Create post button -->
+                <div class="col-md-12 text-start">
+                  <button class="btn btn-primary w-100" type="submit">
+                    Create post
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- Form END -->
+          </div>
+        </div>
+        <!-- Chart END -->
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
