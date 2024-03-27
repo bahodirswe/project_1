@@ -120,7 +120,6 @@
             <h3>{{ comments_count }} comments</h3>
             
             {% for comment in comments %}
-            {% if comment.user.url %}
             <div class="my-4 d-flex ps-2 ps-md-3">
               <img class="avatar avatar-md rounded-circle float-start me-3"
                 src="{{ comment.user.avatar.url}}"
@@ -137,6 +136,7 @@
                 <p>{{ comment.body}}</p>
               </div>
             </div>
+            {% if comment.is_parent is False %}
             {% else %}
             <div class="my-4 d-flex ps-2 ps-md-3">
               <img class="avatar avatar-md rounded-circle float-start me-3"
