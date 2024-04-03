@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
 <section class="py-4">
   <div class="container">
@@ -156,7 +157,7 @@
                     <td>
                       <div class="d-flex gap-2">
                         <a
-                          href="{% url "blog:post_delate" post.id %}"
+                          href="{% url 'blog:post_delate' post.id %}"
                           class="btn btn-light btn-round mb-0"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
@@ -165,7 +166,7 @@
                           ><i class="bi bi-trash"></i
                         ></a>
                         <a
-                          href="{% url "blog:post_update" post.id %}"
+                          href="{% url 'blog:post_update' post.id %}"
                           class="btn btn-light btn-round mb-0"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
@@ -204,6 +205,7 @@
                   {% else %}
                   <li class="page-item disabled"></li>
                   {% endif %} 
+
                   {% for i in posts.paginator.page_range %} 
                   {% if posts.number == i %}
                   <li class="page-item disabled">

@@ -3,6 +3,7 @@ from django import forms
 from django.forms.widgets import TextInput
 from .models import Post, Category, Comment
 
+
 class CreatePostForm(forms.ModelForm):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
