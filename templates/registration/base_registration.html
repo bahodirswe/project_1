@@ -109,35 +109,6 @@
                     <img class="navbar-brand-item light-mode-item" src="{% static 'assets/images/logo.svg' %}" alt="logo">			
                     <img class="navbar-brand-item dark-mode-item" src="{% static 'assets/images/logo-light.svg' %}" alt="logo">			
                 </a>
-                <!-- Logo END -->
-
-                <!-- Responsive navbar toggler -->
-                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="text-body h6 d-none d-sm-inline-block">Menu</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Main navbar START -->
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav navbar-nav-scroll mx-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="{% url 'blog:home' %}">
-                              Home
-                            </a>
-                          </li>
-                        
-                        {% if request.user.is_superuser %}
-                        <li class="nav-item">
-                            <a
-                              class="nav-link"
-                              href="{% url 'user:dashboard' request.user.id %}">
-                              Dashboard
-                            </a>
-                          </li>
-                        {% endif %}
-
-                    </ul>
-                </div>
             </div>
         </nav>
         <!-- Logo Nav END -->
@@ -223,7 +194,9 @@
 
 
     <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script> 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+      crossorigin="anonymous"></script>
 
     <script src="{% static 'assets/vendor/tiny-slider/tiny-slider.js' %}"></script>
     <script src="{% static 'assets/vendor/sticky-js/sticky.min.js' %}"></script> 
