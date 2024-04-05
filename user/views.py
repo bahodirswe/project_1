@@ -6,6 +6,17 @@ from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView, LogoutView
 
+
+###
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
+
+def is_superuser(user):
+    return user.is_authenticated and user.is_superuser
+
+chek_is_superuser = user_passes_test(is_superuser)
+###
+
 def sign_up(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -19,6 +30,8 @@ def sign_up(request):
     }
     return render(request, "registration/signup.html", data)
 
+
+
 class LoginView(LoginView):
     template_name = "registration/signin.html"
     authentication_form = CustomLoginForm
@@ -28,8 +41,10 @@ class LoginView(LoginView):
     #     return super().form_valid(form)
     
 
-
+@login_required
 def dashboard(request, id):
+    if request.user != user:
+        return redirect('blog:home')
     user = get_object_or_404(User, id=id)
     user_posts = Post.objects.filter(author=user)
     posts_count = user_posts.count()
@@ -48,7 +63,7 @@ def dashboard(request, id):
 
     return render(request, "dashboard.html", data)
 
-
+@login_required
 def profile(request, id):
     user = get_object_or_404(User, id=id)
     message = False
@@ -80,7 +95,7 @@ def profile(request, id):
 
     return render(request, "registration/profile.html", data)
 
-
+@login_required
 def follow(request, id):
     user = get_object_or_404(User, id=id)
 
@@ -92,7 +107,7 @@ def follow(request, id):
 
     return redirect( "user:profile", id=user.id)
 
-
+@login_required
 def follow_info(request, id):
     user = get_object_or_404(User, id=id)
 
@@ -102,6 +117,7 @@ def follow_info(request, id):
 
     return render(request, "follow_info.html", data)
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('blog:home')
