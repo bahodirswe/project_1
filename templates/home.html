@@ -358,7 +358,7 @@
               <div class="p-3">
                 <a
                   href="#"
-                  class="stretched-link btn-link fw-bold text-black h5"
+                  class="stretched-link btn-link fw-bold text-white h5"
                   >{{ category.name }}</a
                 >
               </div>
@@ -378,12 +378,13 @@
             <div class="col-12 col-sm-6 col-lg-12">
               <h4 class="mt-4 mb-3">Oxirgi post</h4>\
               {% for i in trends_posts %}
+              {% if i.img %}
               <div class="card mb-3">
                 <div class="row g-3">
                   <div class="col-4">
                     <img
                       class="rounded"
-                      src="assets/images/blog/4by3/thumb/01.jpg"
+                      src="{{ i.img.url }}"
                       alt=""
                     />
                   </div>
@@ -399,6 +400,29 @@
                   </div>
                 </div>
               </div>
+              {% else %}
+              <div class="card mb-3">
+                <div class="row g-3">
+                  <div class="col-4">
+                    <img
+                      class="rounded"
+                      src="https://i.pinimg.com/originals/3e/5d/f1/3e5df1a2f3c3558ace3233d7504c2e05.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="col-8">
+                    <h6>
+                      <a
+                        href="{% url 'blog:post_detail' i.id %}"
+                        class="btn-link stretched-link text-reset fw-bold"
+                        >{{ i.name|truncatewords:6 }}</a
+                      >
+                    </h6>
+                    <div class="small mt-1">{{ i.created_at|date:"Y-m-d"}}</div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
               {% endfor %}
 
             </div>
