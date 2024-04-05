@@ -152,6 +152,7 @@ def post_update(request, id):
         user = request.user
         if form.is_valid():
             post = form.save(commit=False)
+            post.img = form.cleaned_date('image')
             post.author = user
             post.save()
 
