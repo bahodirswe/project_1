@@ -62,7 +62,7 @@ MIDDLEWARE = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    f"https://www{WEBSITE_URL}",
+    f"https://www.{WEBSITE_URL}",
     f"https://{WEBSITE_URL}",
     "http://127.0.0.1",
     "http://localhost"
