@@ -346,10 +346,11 @@
           </div>
           <div>
             <h4 class="mt-4 mb-3">Ommaviy mavzular</h4>
+            {% for category in categorys %}
             <div
               class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded bg-dark-overlay-4"
               style="
-                background-image: url(assets/images/blog/4by3/01.jpg);
+                background-image: url(https://pediatriya.uz/wp-content/uploads/2015/05/flag.jpg);
                 background-position: center left;
                 background-size: cover;
               "
@@ -357,75 +358,15 @@
               <div class="p-3">
                 <a
                   href="#"
-                  class="stretched-link btn-link fw-bold text-white h5"
-                  >Travel</a
+                  class="stretched-link btn-link fw-bold text-black h5"
+                  >{{ post.category }}</a
                 >
               </div>
             </div>
-            <div
-              class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded"
-              style="
-                background-image: url(assets/images/blog/4by3/02.jpg);
-                background-position: center left;
-                background-size: cover;
-              "
-            >
-              <div class="bg-dark-overlay-4 p-3">
-                <a
-                  href="#"
-                  class="stretched-link btn-link fw-bold text-white h5"
-                  >Business</a
-                >
-              </div>
-            </div>
-            <div
-              class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded"
-              style="
-                background-image: url(assets/images/blog/4by3/03.jpg);
-                background-position: center left;
-                background-size: cover;
-              "
-            >
-              <div class="bg-dark-overlay-4 p-3">
-                <a
-                  href="#"
-                  class="stretched-link btn-link fw-bold text-white h5"
-                  >Marketing</a
-                >
-              </div>
-            </div>
-            <div
-              class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded"
-              style="
-                background-image: url(assets/images/blog/4by3/04.jpg);
-                background-position: center left;
-                background-size: cover;
-              "
-            >
-              <div class="bg-dark-overlay-4 p-3">
-                <a
-                  href="#"
-                  class="stretched-link btn-link fw-bold text-white h5"
-                  >Photography</a
-                >
-              </div>
-            </div>
-            <div
-              class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded"
-              style="
-                background-image: url(assets/images/blog/4by3/05.jpg);
-                background-position: center left;
-                background-size: cover;
-              "
-            >
-              <div class="bg-dark-overlay-4 p-3">
-                <a
-                  href="#"
-                  class="stretched-link btn-link fw-bold text-white h5"
-                  >Sports</a
-                >
-              </div>
-            </div>
+            {% endfor %}
+
+
+            
             <div class="text-center mt-3">
               <a href="#" class="fw-bold text-body text-primary-hover"
                 ><u>Barcha toifalarni ko'rish</u></a

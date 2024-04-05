@@ -18,6 +18,8 @@ def trends_all(request):
 
 def home(request):
 
+    categorys = Category.objects.all()
+
     for trend in Trend.objects.all():
         trend.delete()
 
@@ -40,6 +42,7 @@ def home(request):
     posts_sponsored = Post.objects.filter(status=True)
 
     data = {
+        "categorys": categorys,
         "posts": posts,
         "posts_sponsored": posts_sponsored,
         "trends_posts":posts[:5],
