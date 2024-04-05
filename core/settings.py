@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
-WEBSITE_URL = os.environ.get('WEBSITE_URL')
+WEB_URL = os.environ.get('WEB_URL')
 
 
 DJANGO_APPS = [
