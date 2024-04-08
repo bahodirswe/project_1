@@ -4,6 +4,16 @@ from blog.forms import CreatePostForm, UpdatePostForm, CommentForm
 from collections import Counter
 from django.db.models import Q
 
+###
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
+
+def is_superuser(user):
+    return user.is_authenticated and user.is_superuser
+
+check_is_superuser = user_passes_test(is_superuser)
+####
+
 def extract_hashtags(text, trends):
     for word in text.split():
         if word[0] == '#':
@@ -113,7 +123,8 @@ def post_detail(request, id):
 
     return render(request, "posts/post_detail.html", data)
 
-
+@login_required
+@check_is_superuser
 def post_create(request):
     if request.method == 'POST':
         form = CreatePostForm(request.POST, request.FILES)
@@ -143,7 +154,8 @@ def post_create(request):
     return render(request, "posts/post-create.html", data)
 
 
-
+@login_required
+@check_is_superuser
 def post_update(request, id):
     post = get_object_or_404(Post, id=id)
     if request.method == 'POST':
@@ -167,7 +179,8 @@ def post_update(request, id):
 
 
 
-
+@login_required
+@check_is_superuser
 def post_delate(request, id):
     post = get_object_or_404(Post, id=id)
     post.delete()
