@@ -121,7 +121,7 @@
 
             {% for comment in comments %}
             <div class="my-4 d-flex ps-2 ps-md-3">
-              {% if comment.user %}
+              {% if comment.user.avatar %}
               <img class="avatar avatar-md rounded-circle float-start me-3"
                 src="{{ comment.user.avatar.url}}"
                 alt="avatar" />
@@ -140,7 +140,7 @@
             </div>
             {% for reply in comment.getReplies.all %}
             <div class="my-4 d-flex ps-3 ps-md-5">
-              {% if comment.user %}
+              {% if comment.user.avatar %}
               <img class="avatar avatar-md rounded-circle float-start me-3"
                 src="{{ post.author.avatar.url }}"
                 alt="avatar" />
