@@ -120,11 +120,12 @@
             <h3>{{ comments_count }} comments</h3>
 
             {% for comment in comments %}
-            {% if comment.user %}
             <div class="my-4 d-flex ps-2 ps-md-3">
+              {% if comment.user %}
               <img class="avatar avatar-md rounded-circle float-start me-3"
                 src="{{ comment.user.avatar.url}}"
                 alt="avatar" />
+              {% endif %}
               <div>
                 <div class="mb-2">
                   <h5 class="m-0">{{ comment.user.full_name}}</h5>
