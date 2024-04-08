@@ -42,9 +42,11 @@ class LoginView(LoginView):
 
 @login_required
 def dashboard(request, id):
+    user = get_object_or_404(User, id=id)
+
     if request.user != user:
         return redirect('blog:home')
-    user = get_object_or_404(User, id=id)
+    
     user_posts = Post.objects.filter(author=user)
     posts_count = user_posts.count()
     paginator = Paginator(user_posts, 3)
