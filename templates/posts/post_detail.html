@@ -118,7 +118,7 @@
 
           <div>
             <h3>{{ comments_count }} comments</h3>
-            
+
             {% for comment in comments %}
             <div class="my-4 d-flex ps-2 ps-md-3">
               {% if comment.user %}
@@ -138,7 +138,6 @@
                 <p>{{ comment.body}}</p>
               </div>
             </div>
-            {% endif %}
             {% for reply in comment.getReplies.all %}
             <div class="my-4 d-flex ps-3 ps-md-5">
               <img class="avatar avatar-md rounded-circle float-start me-3"
