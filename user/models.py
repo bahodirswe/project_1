@@ -49,6 +49,10 @@ class User(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return self.phone 
 
+    @property
+    def full_info(self):
+        return f"{self.full_name} - {self.phone} - {self.job} - {self.bio}" 
+
 class Follow(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="followers", blank=True, null=True)
