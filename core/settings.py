@@ -77,6 +77,22 @@ MIDDLEWARE = [
 # SECURE_HSTS_PRELOAD = True
 # SECURE_CONTENT_TYPE_NOSNIFF = True
 
+SITE_ID = 1
+
+CORS_ORIGIN_WHITELIST = [
+
+]
+
+CSRF_TRUSTED_ORIGINS = [
+   
+]
+
+CORS_ALLOWED_ORIGINS = [
+   
+
+]
+
+
 
 ROOT_URLCONF = 'core.urls'
 
@@ -99,12 +115,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.app'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        'ENGINE': 'django.db.backends.postgresql',
+        "NAME": os.environ["DBNAME"],
+        "USER": os.environ["DBUSER"],
+        "PASSWORD": os.environ["DBPASSWORD"],
+        "HOST": os.environ["DBHOST"],
+        "PORT": os.environ["DBPORT"],
     }
 }
 

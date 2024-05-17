@@ -1,5 +1,6 @@
 Django
 django-cors-headers==4.1.0
+djangorestframework==3.15.1
 gunicorn
 Pillow==10.2.0
 sqlparse==0.4.4
